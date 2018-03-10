@@ -1,0 +1,158 @@
+
+.game-info.row vertilize-container=true
+  .col-md-6.col-sm-6
+    .previous-game.panel.panel-default vertilize=true
+      .panel-heading.clearfix
+        h3.panel-title.pull-left LAST GAME {{ prevRoundDetails(user.team) }}
+
+        .share-element.pull-right
+          ul.share-action
+            li.text-uppercase
+              a ng-href='#/users/{{ ::user.id }}/schedule'
+                | Full Schedule
+          ul.sharing-options
+            li.facebook
+              a href="#"
+                span.social_facebook_square
+                span.sr-only Facebook
+            li.twitter
+              a href="#"
+                span.social_twitter_square
+                span.sr-only Twitter
+            li.google-plus
+              a href="#"
+                span.social_googleplus_square
+                span.sr-only Facebook
+
+      .panel-body ng-show='!showLastGame(user)'
+        | There is no last game in the schedule. Maybe the season hasn't started so you haven't played a game yet?
+        |  If this isn't the case, please
+        a< href='http://blog.champtracker.com/contact-us/' contact us
+        | .
+
+      .panel-body ng-show='showLastGame(user)'
+
+        h4.game-date
+          span.text-center
+            span.icon_calendar
+            | {{ ::user.team.past_games[0].start_date_s }}
+        .row.teams
+          .col-md-6.col-sm-6.col-xs-6
+            a.club-logo.home-team ng-href='#/clubs/{{ ::prior_games[0].home_team.club.id }}'
+              img.img-rounded.img-responsive ng-src='{{ clubLogo(prior_games[0].home_team) }}'
+
+          .col-md-6.col-sm-6.col-xs-6
+            a.club-logo ng-href='#/clubs/{{ ::prior_games[0].away_team.club.id }}'
+              img.img-rounded.img-responsive ng-src='{{ clubLogo(prior_games[0].away_team) }}'
+
+          span.vs ng-if="user.team.past_games[0].state != 'final_score'"
+            | vs
+            span
+
+          span.final-score ng-if="user.team.past_games[0].state == 'final_score'"
+            span.score ng-class='homeWinner(user.team.past_games[0])' {{ ::user.team.past_games[0].home_team_score }}
+            span.score ng-class='awayWinner(user.team.past_games[0])' {{ ::user.team.past_games[0].away_team_score }}
+
+        .row
+          .col-md-6.col-sm-6.col-xs-6.text-center
+            h4.club-name
+              a ng-href='#/clubs/{{ ::prior_games[0].home_team.club.id }}' {{ ::user.team.past_games[0].home_team.name }}
+          .col-md-6.col-sm-6.col-xs-6.text-center
+            h4.club-name
+              a ng-href='#/clubs/{{ ::prior_games[0].away_team.club.id }}' {{ ::user.team.past_games[0].away_team.name }}
+
+        hr
+
+      .panel-footer ng-show='showLastGame(user)'
+        button.btn.pull-right type="button" role="button" ng-if='user.current' ng-click='openDashboardPageGameData(user.team.past_games[0],user)' ng-class='addOrEditClass' {{ addOrEditStats }}
+
+  .col-md-6.col-sm-6
+    .next-game.panel.panel-default vertilize=true
+      .panel-heading.clearfix
+
+        h3.panel-title.pull-left NEXT GAME {{ roundDetails(user.team) }}
+        .share-element.pull-right ng-class="{'is-active': share_visible2}"
+          ul.share-action
+            li.text-uppercase
+              a ng-href='#/users/{{ ::user.id }}/schedule'
+                | Full Schedule
+          ul.sharing-options
+            li.facebook
+              a href="#"
+                span.social_facebook_square
+                span.sr-only Facebook
+            li.twitter
+              a href="#"
+                span.social_twitter_square
+                span.sr-only Twitter
+            li.google-plus
+              a href="#"
+                span.social_googleplus_square
+                span.sr-only Facebook
+
+      .panel-body ng-show='!showTeamGame(user.team)'
+        | There is no next game in the schedule. Maybe the season has ended? If not, please
+        a< href='http://blog.champtracker.com/contact-us/' contact us
+        | .
+
+      .panel-body ng-show='showTeamGame(user.team)'
+
+        h4.game-date
+          span.text-center
+            span.icon_calendar
+            | {{ ::user.team.future_games[0].start_date_s }}
+        .row.teams
+          .col-md-6.col-sm-6.col-xs-6.text-center
+            a.club-logo ng-href='#/clubs/{{ ::user.team.future_games[0].home_team.club.id }}'
+              img.img-rounded.img-responsive ng-src='{{ clubLogo(user.team.future_games[0].home_team) }}'
+
+          span.vs
+            | vs
+            span
+
+          .col-md-6.col-sm-6.col-xs-6.text-center
+            a.club-logo.home-team ng-href='#/clubs/{{ ::user.team.future_games[0].away_team.club.id }}'
+              img.img-rounded.img-responsive ng-src='{{ clubLogo(user.team.future_games[0].away_team) }}'
+
+        .row
+          .col-md-6.col-sm-6.col-xs-6.text-center
+            h4.club-name
+              a ng-href='#/clubs/{{ ::user.team.future_games[0].home_team.club.id }}' {{ ::user.team.future_games[0].home_team.name }}
+          .col-md-6.col-sm-6.col-xs-6.text-center
+            h4.club-name
+              a ng-href='#/clubs/{{ ::user.team.future_games[0].away_team.club.id }}' {{ ::user.team.future_games[0].away_team.name }}
+
+        .team-stats.row
+          .col-md-6.col-sm-6.col-xs-6.text-center
+            ul.last-5 ng-show='previous_meetings.team1.length > 0'
+              li.text-uppercase LAST {{ ::previous_meetings.team1.length }}:
+              li ng-class='res.klass' ng-repeat='res in previous_meetings.team1' tooltip-placement="top" tooltip="{{ ::res.date }}" title="{{ ::res.date }}" {{ ::res.result }}
+
+          .col-md-6.col-sm-6.col-xs-6.text-center
+            ul.last-5 ng-show='previous_meetings.team2.length > 0'
+              li.text-uppercase LAST  {{ ::previous_meetings.team2.length }}:
+              li ng-class='res.klass' ng-repeat='res in previous_meetings.team2' tooltip-placement="top" tooltip="{{ ::res.date }}" title="{{ ::res.date }}" {{ ::res.result }}
+        hr
+
+        .row
+          section.game-location.col-lg-6.col-md-6.col-sm-6
+            h5.section-title.text-center.text-uppercase
+              | game location
+            address
+              span.cticon.cticon-location-marker
+              span.text-left
+                div[] {{ ::user.team.future_games[0].venue.address1 }}
+                div[] {{ ::user.team.future_games[0].venue.address2 }}
+                div[] {{ ::user.team.future_games[0].venue.suburb }} {{ ::user.team.future_games[0].venue.state }} {{ ::user.team.future_games[0].venue.zipcode }}
+            h5.text-center.text-uppercase
+              a.hand-pointer ng-click='openMap(user.team.future_games[0])' data-backdrop="static" View map
+
+          section.weather-forecast.col-lg-6.col-md-6.col-sm-6
+            h5.section-title.text-center.text-uppercase weather forecast
+            .temperature.text-center
+              span.cticon ng-class='forecast.icon_class'
+              | {{ ::forecast.temperature }}
+              sup &deg;
+            h5.forecast-description.text-center.text-uppercase
+              | {{ ::forecast.description }}
+

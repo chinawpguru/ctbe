@@ -1,0 +1,74 @@
+I"
+(function() {
+  this.associationError = function() {
+    $('#warning').html("Error whilst loading or saving association details");
+    return $('#warning').show;
+  };
+
+  this.AssociationListCtrl = function($scope, $routeParams, $location, FileUploader, API) {
+    return $scope.associations = API.Associations.query(success, associationError);
+  };
+
+  this.AssociationCtrl = function($scope, $routeParams, $location, FileUploader, API) {
+    var csrf_token, redirectToList, redirectToShow;
+    redirectToShow = function(result) {
+      return $location.url('/associations/' + result.id);
+    };
+    redirectToList = function(result) {
+      return $location.url('/associations/');
+    };
+    $scope.association = {};
+    if ($routeParams.id) {
+      $scope.association = API.Associations.get({
+        id: $routeParams.id
+      }, success, userError);
+    }
+    $scope.create = function(assoc) {
+      return API.Associations.save(assoc, redirectToShow, associationError);
+    };
+    $scope.update = function(assoc) {
+      return assoc.$update(redirectToShow, assocError);
+    };
+    $scope["delete"] = function(assoc) {
+      if (confirm('Delete this association?')) {
+        return assoc.$remove(redirectToList, associationError);
+      }
+    };
+    $scope.assocLogo = function(assoc) {
+      if (!((assoc != null) && (assoc.logo != null) && (assoc.logo.logo != null) && (assoc.logo.logo.url != null))) {
+        return '/img/no-club-logo.gif';
+      }
+      return assoc.logo.logo.url;
+    };
+
+    /* Uploader for assoc */
+    csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    return $scope.uploader = new FileUploader({
+      url: '/associations/upload',
+      autoUpload: true,
+      headers: {
+        'X-CSRF-TOKEN': csrf_token
+      },
+      onCompleteItem: function(item, response, status, headers) {
+        return $scope.association = response;
+      },
+      onBeforeUploadItem: function(item) {
+        return item.formData.push({
+          id: $scope.association.id
+        });
+      },
+      onErrorItem: function(item, response, status, headers) {
+        $('#warning').html("Error whilst uploading avatar");
+        $('#warning').addClass('alert');
+        $('#warning').addClass('alert-warning');
+        return $('#warning').show;
+      }
+    });
+  };
+
+  ngApp.controller('AssociationListCtrl', ['$scope', '$routeParams', '$location', 'API', AssociationListCtrl]);
+
+  ngApp.controller('AssociationCtrl', ['$scope', '$routeParams', '$location', 'FileUploader', 'API', AssociationCtrl]);
+
+}).call(this);
+:ET

@@ -1,0 +1,562 @@
+doctype 5
+html lang="en"
+	head
+    	/! Meta, title, CSS, favicons, etc.
+		meta charset="utf-8" /
+		meta content="IE=edge" http-equiv="X-UA-Compatible" /
+		meta content="width=device-width, initial-scale=1" name="viewport" /
+    	title My Champ Tracker
+
+        = stylesheet_link_tag 'application', media: 'all'
+        /link href="css/animate.min.css" media="screen" rel="stylesheet" type="text/css" /
+        link href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet" type="text/css" /
+        /link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" /
+        /! included everything for development only, customise later
+        /script src="js/modernizr.custom.36994.js"
+	body
+		header#application-header.navbar.navbar-fixed-top
+			.branding
+				button.navbar-toggle.collapsed data-target=".navbar-collapse" data-toggle="collapse" type="button" 
+					span.sr-only Toggle navigation
+					span.icon-bar.line1
+					span.icon-bar.line2
+					span.icon-bar.line3
+
+				a.navmenu-brand href="#"
+					img src="/img/tmp/sample-branding-2x.png" class="img-responsive" alt="Brand name"
+			.header-content.clearfix
+				h1.section-title.pull-left Dashboard
+	          	ul.player-menu.nav.navbar-nav.navbar-right
+					li.dropdown
+						a.dropdown-toggle aria-expanded="true" data-toggle="dropdown" href="#"
+							| Evan 
+							span Kraloglou
+							span.arrow_carrot-down aria-hidden="true"
+							span.player-photo
+								img src="/img/tmp/sample-player-1-sm.jpg" class="img-responsive pull-right img-circle" alt="player name" /
+							ul.dropdown-menu.dropdown-persist role="menu"
+								li
+								    a href="#" 
+										span.glyphicon.glyphicon-cog aria-hidden="true" Account Settings
+								li
+									a href="#" 
+										span.glyphicon.glyphicon-off aria-hidden="true" Logout
+		aside#sidebar-left.navmenu.navmenu-default.navbar-collapse aria-expanded="true"
+
+			nav#navbar role="navigation"
+				ul.nav.navbar-nav
+					li.active
+						a href="#" 
+							span class="icon_datareport"
+							| Dashboard
+					li
+						a href="#"
+							span class="icon_documents_alt"
+							| News
+					li
+						a href="#"
+							span class="icon_datareport"
+							| Results
+					li
+						a href="#"
+							span class="icon_question_alt2"
+							| Hints &amp; tips
+					li
+						a href="#"
+							span class="icon_heart_alt"
+							| Health
+					li
+						a href="#"
+							span class="icon_calendar"
+							| Calendar
+					li
+						a href="#"
+							span class="icon_easel"
+							| Performance
+					li
+						a href="#"
+							span class="icon_ribbon_alt"
+							| My Achievements
+					li
+						a href="#"
+							span class="icon_star_alt"
+							| Training Goals
+					li.menu-divider
+					li
+						a href="#"
+							span class="icon_cog"
+							| Settings
+					li
+						= link_to(login_profile_path)
+						  	span class="icon_profile"
+							| Profile
+					li
+						a href="#"
+							span class="arrow_carrot-right"
+							| View Feature Tour
+
+    	section#primary-content
+			.container-fluid
+				// Main player profile
+				.player-profile.row
+					.col-md-4.avatar
+						= image_tag("player.jpg", class: "avatar-img")
+					.col-md-8.profile-info
+						.detail
+							.row
+								.detail-personal.col-sm-8
+									h1.name
+										| Sergio Aguero
+									h4.role
+										| #10: Forward
+									ul.info
+										li
+											span.item-name
+												| DOB
+											span.item-val
+												| 02 June 1988
+										li
+											span.item-name
+												| Career games
+											span.item-val
+												| 192
+										li
+											span.item-name
+												| Born
+											span.item-val
+												| Quilma, Argentina
+										li
+											span.item-name
+												| Career goals
+											span.item-val
+												| 131
+										li
+											span.item-name
+												| Age
+											span.item-val
+												| 29
+										li
+											span.item-name
+												| Career assists
+											span.item-val
+												| 32
+										li
+											span.item-name
+												| Height
+											span.item-val
+												| 173cm
+										li
+											span.item-name
+												| Career W / L
+											span.item-val
+												| 123 / 33
+										li
+											span.item-name
+												| Weight
+											span.item-val
+												| 70kg
+										li
+											span.item-name
+												| Dominant leg(s)
+											span.item-val
+												| Right
+								.detail-team.col-sm-4
+									= image_tag("team-logo.png", class: "team-logo img-responsive")
+									h3.team-name
+										| Manchester City
+									p
+										| English Premier League
+						hr						
+						.profile-links.row
+							.col-sm-6.follow
+								span.label
+									| Follow
+								ul.social-icons
+									li
+										span.social-icon.facebook
+									li
+										span.social-icon.twitter
+									li
+										span.social-icon.youtube
+									li
+										span.social-icon.pinterest
+									li
+										span.social-icon.instagram
+									li
+										span.social-icon.tumblr
+							.col-sm-6.edit-detail
+								a href="#"
+									span.icon
+									| Edit Details
+								a href="#"
+									span.icon
+									| View Full Bio
+
+				// All Stats View
+				.stats-list.row
+					table.table.table-responsive.table-striped
+						thead
+							tr
+								th
+									| #
+								th
+									| Team
+								th
+									| Played
+								th
+									| GD
+								th
+									| Points
+								th
+									| Win
+								th
+									| Draw
+								th
+									| Loss
+								th
+									| GF
+								th
+									| GA
+								th
+									| YC
+								th
+									| RC
+					  	tr
+					  		td
+					  			| 1
+				  			td
+					  			| Oakleigh Cannons FC
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 2
+				  			td
+					  			| Brisbane Roar
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 3
+				  			td
+					  			| Nunawading City
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 4
+				  			td
+					  			| Oakleigh Cannons FC
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 5
+				  			td
+					  			| Brisbane Roar
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 6
+				  			td
+					  			| Nunawading City
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 7
+				  			td
+					  			| Oakleigh Cannons FC
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 8
+				  			td
+					  			| Brisbane Roar
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 9
+				  			td
+					  			| Nunawading City
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 10
+				  			td
+					  			| Oakleigh Cannons FC
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 11
+				  			td
+					  			| Brisbane Roar
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+			  			tr
+					  		td
+					  			| 12
+				  			td
+					  			| Nunawading City
+				  			td
+					  			| 22
+				  			td
+					  			| 38
+				  			td
+					  			| 42
+				  			td
+					  			| 12
+				  			td
+					  			| 6
+				  			td
+					  			| 4
+				  			td
+					  			| 62
+				  			td
+					  			| 24
+				  			td
+					  			| 2
+				  			td
+					  			| 1
+
+		footer.footer
+			.container-fluid
+				.row
+				  	.col-sm-6.col-md-8
+						ul.footer-links
+							li
+								a href="#"
+									| Privacy
+							li
+								a href="#"
+									| Terms and Condition
+						p
+							| If any of the information on this page is missing or appears incorrect please
+							a< ng-href="http://blog.champtracker.com/contact-us/" contact us
+					.col-sm-6.col-md-4.ssl-logo
+						= image_tag("ssl.jpeg", class: "ssl-img")
+		      	.row
+		      		.col-sm-12.text-center
+		      			p.copyright
+							| Copyright&copy; 2015-
+							= Date.today.year 
+							|  Champ Tracker
+
+
+
+			a.to-top
+
+		.nav-content-overlay
+
+
+        = javascript_include_tag 'application'
+
+        /script src="//code.jquery.com/jquery-1.11.2.min.js"
+
+        /script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"
+
+        /script src="js/bootstrap.min.js"
+        /script src="js/scripts.js"

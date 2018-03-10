@@ -1,0 +1,13 @@
+div ng-controller='DashboardCtrl'
+
+  div ng-include="'dashboard/_navigation.html'"
+
+  section#primary-content
+    .container-fluid
+      #warning
+
+      div ng-include="'dashboard/_profile.html'"
+      div ng-include="'dashboard/_player-stats.html'"
+      div ng-include="'dashboard/_games.html'"
+
+      div ng-include="'dashboard/_footer.html'"

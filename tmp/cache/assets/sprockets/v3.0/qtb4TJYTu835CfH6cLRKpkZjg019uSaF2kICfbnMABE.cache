@@ -1,0 +1,87 @@
+I"Õ(function() {
+  this.articleError = function() {
+    $('#warning').html("Error whilst loading article content");
+    return $('#warning').show();
+  };
+
+  this.ArticleListCtrl = function($scope, $routeParams, $location, $rootScope, sharedServices, FileUploader, API) {
+    var csrf_token;
+    $rootScope.current_user = API.Users.current_user(success, articleError);
+    $scope.category = $location.url().split('/')[1];
+    if ($scope.category === 'health-and-wellbeing') {
+      $scope.page = 'health_and_wellbeing';
+      $scope.page_title = 'Health and Wellbeing';
+    } else {
+      $scope.page = 'training_and_performance';
+      $scope.page_title = 'Training and Performance';
+    }
+    $scope.articles = API.Articles.query({
+      category: $scope.category
+    }, success, articleError);
+    $scope.articleUrl = function(article) {
+      if (window.mode === 'app.champtracker.com') {
+        return "https://app.champtracker.com/content" + article.url;
+      } else {
+        return "http://localhost:3000/content" + article.url;
+      }
+    };
+    $scope.toggleButtonClass = function(navCollapsed) {
+      return sharedServices(navCollapsed);
+    };
+    $scope.toggleSidebarClass = function(navCollapsed) {
+      return sharedServices(navCollapsed);
+    };
+
+    /* Avatar uploader and cropping */
+    $scope.uploadAvatar = false;
+    $scope.uploadAvatarNow = function() {
+      return $scope.uploadAvatar = true;
+    };
+
+    /* Uploader for new avatar photos */
+    csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    return $scope.uploader = new FileUploader({
+      url: '/users/upload',
+      autoUpload: true,
+      headers: {
+        'X-CSRF-TOKEN': csrf_token
+      },
+      onCompleteItem: function(item, response, status, headers) {
+        $scope.user = transformUser(response);
+        $scope.uploadAvatar = false;
+        $('#warning').html("Upload complete!");
+        return $('#warning').show();
+      },
+      onBeforeUploadItem: function(item) {
+        return item.formData.push({
+          user_id: $scope.user.id
+        });
+      },
+      onErrorItem: function(item, response, status, headers) {
+        $('#warning').html("Error whilst uploading avatar");
+        $('#warning').addClass('alert');
+        $('#warning').addClass('alert-warning');
+        $('#warning').show();
+        return $scope.uploadAvatar = false;
+      }
+    });
+  };
+
+  this.ArticleCtrl = function($scope, $routeParams, API) {
+    var redirectToList, redirectToShow;
+    redirectToShow = function(result) {
+      return $location.url('/articles/' + result.id);
+    };
+    redirectToList = function(result) {
+      return $location.url('/articles/');
+    };
+    $scope.page = 'articles';
+    return $scope.page_title = 'Articles';
+  };
+
+  ngApp.controller('ArticleListCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'sharedServices', 'FileUploader', 'API', ArticleListCtrl]);
+
+  ngApp.controller('ArticleCtrl', ['$scope', '$routeParams', 'API', ArticleCtrl]);
+
+}).call(this);
+:ET

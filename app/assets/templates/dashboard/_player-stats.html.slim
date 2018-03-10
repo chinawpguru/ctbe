@@ -1,0 +1,97 @@
+// Main player stats
+.player-stats.row
+  section.section-header.col-lg-12
+    h4.section-title.pull-left.text-uppercase Stats
+    /! This is a nested button group with dropdown
+
+    .btn-group.btn-group-sm aria-label=("Season or career stats") role="group"
+      .btn-group.btn-group-sm role="group"
+        button.btn.btn-default.dropdown-toggle aria-expanded="false" data-toggle="dropdown" type="button" ng-class="statYearSelected()"
+          | {{ selectedSeason() }}
+          span.arrow_carrot-down< aria-hidden='true'
+        ul.dropdown-menu role="menu"
+          li ng-repeat='stat in season_stats'
+            a ng-click='setCurrentStat(stat)' {{ ::stat.season }}
+
+      button.btn.btn-default type="button" ng-click='setCurrentStat(all_stats)' ng-class="notStatYearSelected()" Career
+
+  .stat-games-played.col-lg-5th-1.col-md-6.col-sm-6
+    // games played - actual stat TBD
+    .panel.text-center
+      .panel-body
+        .chart-1 easypiechart=true options='options1' percent='percent1'
+          span.cticon.cticon-run-ball
+        h2.stat
+          span.bold[] {{ current_stat.games }}
+          span.divider
+          span.light[] {{ current_stat.team_games }}
+        h6.metric
+          span.text-uppercase Games {{ playedOrCoached() }}
+
+  .stat-wld.col-lg-5th-1.col-md-6.col-sm-6
+    // W / L / D - actual stat TBD
+    .panel.text-center
+      .panel-body
+        .chart-2 easypiechart=true options='options2' percent='percent2'
+          span.cticon.cticon-soccer-ball
+        h2.stat
+          // WINS
+          span.bold[] {{ current_stat.win }}
+          span.divider
+          // LOSSES
+          span.bold[] {{ current_stat.lose }}
+          span.divider
+          // DRAWS
+          span.bold[] {{ current_stat.draw }}
+        h6.metric
+          span.win.text-uppercase W
+          span.divider
+          span.loss.text-uppercase L
+          span.divider
+          span.draw.text-uppercase D
+
+  .stat-goals.col-lg-5th-1.col-md-6.col-sm-6
+
+    .panel.text-center
+      .panel-body
+        .chart-3 easypiechart=true options='options3' percent='percent3'
+          span.cticon.cticon-goal2
+        h2.stat
+          // GOALS
+          span.bold[] {{ showGoalsOrCleanSheets() }}
+        h6.metric.text-uppercase
+          | {{ showGoalsTitle() }}
+
+  .stat-assists.col-lg-5th-1.col-md-6.col-sm-6
+    .panel.text-center
+      .panel-body
+        .chart-4 data-percent="43"
+          span.cticon ng-class='assistsClass()'
+        h2.stat
+          // GOALS
+          span.bold[] {{ showAssistsOrConceded() }}
+        h6.metric
+          span.text-uppercase[] {{ showAssistsTitle() }}
+
+  .stat-group.col-lg-5th-1.col-md-12.col-sm-12.col-xs-12
+    // yellow and red cards
+    .row
+      .stat-card-yellow.col-lg-12.col-md-6.col-sm-6.col-xs-6
+        .panel
+          .panel-body.text-center
+            .card
+              span.foreground
+              span.background
+            h2.stat
+              span.bold[] {{ current_stat.yellow_cards }}
+            span.label.text-uppercase Cards
+      .stat-card-red.col-lg-12.col-md-6.col-sm-6.col-xs-6
+        .panel
+          .panel-body.text-center
+            .card
+              span.foreground
+              span.background
+            h2.stat
+              span.bold[] {{ current_stat.red_cards }}
+            span.label.text-uppercase Cards
+

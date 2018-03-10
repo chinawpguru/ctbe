@@ -1,0 +1,28 @@
+# Logfile created on 2017-12-12 13:31:41 +0800 by logger.rb/47272
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Starting the New Relic agent in "development" environment.
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : To prevent agent startup add a NEWRELIC_AGENT_ENABLED=false environment variable or modify the "development" section of your newrelic.yml.
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] WARN : No configuration file found. Working directory = /home/whitewolf/ctbe
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] WARN : Looked in these locations (based on defaults): /home/whitewolf/ctbe/config/newrelic.yml, /home/whitewolf/ctbe/newrelic.yml, /home/whitewolf/ctbe/config/newrelic.yml, /home/whitewolf/ctbe/newrelic.yml, /home/whitewolf/.newrelic/newrelic.yml, /home/whitewolf/newrelic.yml
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Environment: development
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : No known dispatcher detected.
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Application: development
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] WARN : No license key found. This often means your newrelic.yml file was not found, or it lacks a section for the running environment, 'development'. You may also want to try linting your newrelic.yml to ensure it is valid YML.
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing Redis Instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing ActiveJob instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing Memcache instrumentation for dalli gem
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing Rails 3+ middleware instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing Sidekiq instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing ActiveRecord 4+ instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing deferred Rack::Builder instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing Rack::Builder middleware instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing DelayedJob instrumentation [part 1/2]
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing Net instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing Rails 4 view instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing Rails 4 Error instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Installing Rails 4 Controller instrumentation
+[2017-12-12 13:31:41 +0800 whitewolf-ubuntu (24903)] INFO : Finished instrumentation
+[2017-12-12 13:31:42 +0800 whitewolf-ubuntu (24903)] INFO : Installing Sinatra instrumentation
+[2017-12-12 13:31:42 +0800 whitewolf-ubuntu (24903)] INFO : Doing deferred dependency-detection before Rack startup
+[2017-12-12 13:31:53 +0800 whitewolf-ubuntu (24903)] INFO : delayed_job not available: No DJ worker present. Skipping DJ queue sampler
+[2017-12-12 13:31:56 +0800 whitewolf-ubuntu (24903)] ERROR : Invalid license key, please contact support@newrelic.com
+[2017-12-12 13:31:56 +0800 whitewolf-ubuntu (24903)] ERROR : Visit NewRelic.com to obtain a valid license key, or to upgrade your account.

@@ -1,0 +1,107 @@
+I"¦
+(function() {
+  var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+  ngApp.filter('uniqueOnAttribute', function() {
+    return function(items, attribute) {
+      var existing, filtered, found, i, item, j, len, len1;
+      if (items == null) {
+        return [];
+      }
+      filtered = [];
+      for (i = 0, len = items.length; i < len; i++) {
+        item = items[i];
+        found = false;
+        for (j = 0, len1 = filtered.length; j < len1; j++) {
+          existing = filtered[j];
+          if (existing[attribute] === item[attribute]) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          filtered.push(item);
+        }
+      }
+      return filtered;
+    };
+  });
+
+  ngApp.filter('filterBySeason', function() {
+    return function(items, attribute) {
+      var filtered, item;
+      if (items == null) {
+        return [];
+      }
+      return filtered = (function() {
+        var i, len, results;
+        results = [];
+        for (i = 0, len = items.length; i < len; i++) {
+          item = items[i];
+          if (item.season === attribute) {
+            results.push(item);
+          }
+        }
+        return results;
+      })();
+    };
+  });
+
+  ngApp.filter('filterByYearEmpty', function() {
+    return function(items, attribute) {
+      var filtered, item;
+      if (items == null) {
+        return [];
+      }
+      filtered = (function() {
+        var i, len, results;
+        results = [];
+        for (i = 0, len = items.length; i < len; i++) {
+          item = items[i];
+          if (new Date(item.start_date).getFullYear() === attribute) {
+            results.push(item);
+          }
+        }
+        return results;
+      })();
+      return filtered.length === 0;
+    };
+  });
+
+  ngApp.filter('getValidSeasons', function() {
+    return function(items) {
+      var curr_season, i, item, len, seasons;
+      if (items == null) {
+        return [];
+      }
+      seasons = [];
+      for (i = 0, len = items.length; i < len; i++) {
+        item = items[i];
+        curr_season = item.season;
+        if (indexOf.call(seasons, curr_season) < 0) {
+          seasons.push(curr_season);
+        }
+      }
+      return seasons.sort().reverse();
+    };
+  });
+
+  ngApp.filter('equipmentType', function() {
+    return function(items, kind) {
+      var boots, i, item, len;
+      if (items == null) {
+        return [];
+      }
+      boots = [];
+      for (i = 0, len = items.length; i < len; i++) {
+        item = items[i];
+        if (item.equipment_type === kind) {
+          boots.push(item);
+        }
+      }
+      return boots;
+    };
+  });
+
+}).call(this);
+:ET

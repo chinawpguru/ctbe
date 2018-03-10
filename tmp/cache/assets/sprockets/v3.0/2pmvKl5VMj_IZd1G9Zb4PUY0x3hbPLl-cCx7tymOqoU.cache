@@ -1,0 +1,106 @@
+I"à(function() {
+  this.teamError = function() {
+    $('#warning').html("Error whilst loading or saving team details");
+    return $('#warning').show;
+  };
+
+  this.TeamListCtrl = function($scope, $rootScope, $routeParams, $location, API) {
+    $scope.user = $rootScope.user;
+    $scope.club = $rootScope.club;
+    $scope.association = $rootScope.association;
+    $scope.clubVisible = angular.isDefined($rootScope.club);
+    $scope.divisions = [];
+    $scope.division = {};
+    $scope.team = {};
+    $scope.teamSelected = false;
+    $scope.selectDivision = function(division) {
+      $scope.division = division;
+      return $scope.division.teams = API.Divisions.teams({
+        id: $scope.division.id
+      }, success, teamError);
+    };
+    $scope.clubLogo = function(club) {
+      if (!((club != null) && (club.logo != null) && (club.logo.logo != null) && (club.logo.logo.url != null))) {
+        return '/img/no-club-logo.gif';
+      }
+      return club.logo.logo.url;
+    };
+    $scope.selectTeam = function(team) {
+      $scope.team = team;
+      return $scope.teamSelected = true;
+    };
+    return $scope.confirmTeam = function(team) {
+      $rootScope.team = $scope.team = team;
+      return $location.url('/teams/confirm');
+    };
+  };
+
+  this.TeamCtrl = function($scope, $rootScope, $routeParams, $location, API) {
+    var redirectToList, redirectToShow;
+    $scope.club = $rootScope.club || {};
+    $scope.team = $rootScope.team || {};
+    $scope.teamVisible = angular.isDefined($rootScope.team);
+    $scope.user = {};
+    API.Teams.get({
+      id: $scope.team.id
+    }, function(team) {
+      return $scope.team = team;
+    });
+    redirectToShow = function(result) {
+      return $location.url('/teams/' + result.id);
+    };
+    redirectToList = function(result) {
+      return $location.url('/teams/');
+    };
+    $rootScope.current_user = API.Users.current_user({}, function(user) {
+      if (user.id == null) {
+        $rootScope.user_logged_out = true;
+        window.location.pathname = '/user_sessions/new';
+        return;
+      }
+      if ($routeParams.id) {
+        return $scope.team = API.Teams.get({
+          id: $routeParams.id
+        }, success, teamError);
+      }
+    });
+    $scope.confirmTeam = function() {
+      return API.Users.update_team({
+        team_id: $scope.team.id
+      }, function() {
+        success();
+        return $location.url('/users/' + $rootScope.current_user.id + '/dashboard');
+      }, teamError);
+    };
+    $scope.clubLogo = function(club) {
+      if (!((club != null) && (club.logo != null) && (club.logo.logo != null) && (club.logo.logo.url != null))) {
+        return '/img/no-club-logo.gif';
+      }
+      return club.logo.logo.url;
+    };
+    $scope.gameUrl = function(game, user) {
+      if (user != null) {
+        return $location.url("/users/" + user.id + "/games/" + game.id + "/played");
+      } else {
+        return $location.url("/games/" + game.id + "/played");
+      }
+    };
+    $scope.create = function(team) {
+      return API.Team.save(team, redirectToShow, teamError);
+    };
+    $scope.update = function(team) {
+      return team.$update(redirectToShow, teamError);
+    };
+    return $scope["delete"] = function(team) {
+      if (confirm('Delete this team?')) {
+        return team.$remove(redirectToList, teamError);
+      }
+    };
+  };
+
+  ngApp.controller('TeamListCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'API', TeamListCtrl]);
+
+  ngApp.controller('TeamCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'API', TeamCtrl]);
+
+}).call(this);
+:ET

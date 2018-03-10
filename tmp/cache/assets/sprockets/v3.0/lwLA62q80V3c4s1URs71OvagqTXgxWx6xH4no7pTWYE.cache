@@ -1,0 +1,50 @@
+I"ì(function() {
+  this.userError = function(e) {
+    if (e.data.error) {
+      $('#warning').html(e.data.error);
+    } else {
+      $('#warning').html("Error whilst loading or saving user details");
+    }
+    return $('#warning').show;
+  };
+
+  this.UserListCtrl = function($scope, $routeParams, $location, API) {
+    return $scope.users = API.Users.query(success, userError);
+  };
+
+  this.UserCtrl = function($scope, $routeParams, $location, API) {
+    var redirectToFindClubs, redirectToList, redirectToShow;
+    redirectToShow = function(result) {
+      return $location.url('/users/' + result.id);
+    };
+    redirectToFindClubs = function(result) {
+      return $location.url('/clubs/find');
+    };
+    redirectToList = function(result) {
+      return $location.url('/users/');
+    };
+    $scope.user = {};
+    if ($routeParams.id) {
+      $scope.user = API.Users.get({
+        id: $routeParams.id
+      }, success, userError);
+    }
+    $scope.create = function(user) {
+      return API.Users.save(user, redirectToFindClubs, userError);
+    };
+    $scope.update = function(user) {
+      return user.$update(redirectToShow, userError);
+    };
+    return $scope["delete"] = function(user) {
+      if (confirm('Delete this user?')) {
+        return user.$remove(redirectToList, userError);
+      }
+    };
+  };
+
+  ngApp.controller('UserListCtrl', ['$scope', '$routeParams', '$location', 'API', UserListCtrl]);
+
+  ngApp.controller('UserCtrl', ['$scope', '$routeParams', '$location', 'API', UserCtrl]);
+
+}).call(this);
+:ET
